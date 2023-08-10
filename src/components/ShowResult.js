@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 const ShowResult = props => {
     let params = useParams()
     console.log(params)
@@ -46,19 +54,30 @@ const ShowResult = props => {
     }
     
     return (
-        <div className="container">
-        <ul>
+        <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+            <TableRow>
+                {
+                    Object.entries(((Object.entries({result}))[0][1]).result[0]).map((value, index) => (
+                        <TableCell>
+                            {value[0]}
+                        </TableCell>
+                    ))
+                }
+            </TableRow>
+        </TableHead>
+        <TableBody>
             {((Object.entries({result}))[0][1]).result.map((item, index) => (
-            <li key = {index}>
+            <TableRow key = {index}>
              {Object.entries(item).map((value, index) => (
-                <ul>
-                    <li key = {index}>{value[0]} {value[1]}</li>
-                </ul>
+                    <TableCell key = {index}>{value[1]}</TableCell>
             ))}  
-            </li>
+            </TableRow>
         ))} 
-        </ul>
-        </div>
+        </TableBody>
+        </Table>
+        </TableContainer>
     );
     }
 
